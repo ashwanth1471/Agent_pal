@@ -191,7 +191,7 @@ All models are implemented using Pydantic with strict schema enforcement.
 ### 1. Clone the Repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/ashwanth1471/Agent_pal.git
 ```
 
 ### 2. Install Dependencies
