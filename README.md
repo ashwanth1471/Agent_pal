@@ -2,37 +2,37 @@
 Agent Pal – Autonomous Coding Agent System
 
 
-Agent Pal
-Multi-Agent Autonomous Engineering System using LangGraph
+# 🚀 Agent Pal  
+### Autonomous Multi-Agent Engineering System using LangGraph
 
-Agent Pal is a structured multi-agent system that transforms a raw project prompt into a fully generated software project. It uses a Planner → Architect → Coder pipeline orchestrated through LangGraph, with structured outputs enforced via Pydantic, and tool-enabled implementation powered by LangChain ReAct agents.
+Agent Pal is a structured multi-agent system that transforms a raw project prompt into a fully generated software project.
+
+It orchestrates a **Planner → Architect → Coder** pipeline using LangGraph, enforces structured outputs with Pydantic, and implements tasks through a tool-enabled ReAct coding agent.
 
 The system demonstrates controlled agent orchestration, structured reasoning, task decomposition, and safe autonomous file generation.
 
-Key Highlights
+---
 
-Multi-agent architecture (Planner, Architect, Coder)
+## ✨ Key Highlights
 
-Structured engineering plan generation
+- 🧠 Multi-agent architecture (Planner, Architect, Coder)
+- 📐 Structured engineering plan generation
+- 🗂 Automatic task decomposition with dependency ordering
+- 🔧 Tool-augmented coding agent using ReAct
+- 🛡 Sandboxed file system execution
+- 🔒 Safe path validation
+- 🔁 Iterative execution loop until completion
+- 💻 CLI-based execution
+- 📊 Strict schema enforcement using Pydantic
+- 🧩 Graph-based orchestration with conditional edges
 
-Automatic task decomposition with dependency ordering
+---
 
-Tool-augmented coding agent using ReAct
+## 🏗 System Architecture
 
-Sandboxed file system execution
+### 🔄 Agent Pipeline
 
-Safe path validation
-
-Iterative execution loop until completion
-
-CLI-based execution
-
-Strict schema enforcement using Pydantic
-
-Graph-based orchestration with conditional edges
-
-System Architecture
-Agent Pipeline
+```
 User Prompt
      ↓
 Planner Agent
@@ -42,93 +42,84 @@ Architect Agent
 Coder Agent (iterative execution loop)
      ↓
 END
+```
 
-Execution Graph
+---
 
-Built using StateGraph(dict)
+### 🧭 Execution Graph
 
-Conditional edges allow the coder to loop until all tasks are completed
+Built using `StateGraph(dict)` from LangGraph.
 
-Entry point: planner
+- Entry point: `planner`
+- Conditional edges allow the coder to loop until all tasks are completed
+- Exit condition: `status == "DONE"`
 
-Exit condition: status == "DONE"
+---
 
-Agent Responsibilities
-Planner Agent
+## 🤖 Agent Responsibilities
 
-Transforms the raw user prompt into a structured engineering Plan containing:
+### 🧠 Planner Agent
 
-Application name
+Transforms the raw user prompt into a structured engineering **Plan** containing:
 
-Description
-
-Tech stack
-
-Feature list
-
-File structure (path + purpose)
+- Application name  
+- Description  
+- Tech stack  
+- Feature list  
+- File structure (path + purpose)  
 
 Structured output enforced via Pydantic schema.
 
-Architect Agent
+---
 
-Converts the Plan into a detailed TaskPlan:
+### 🏗 Architect Agent
 
-Breaks project into ordered ImplementationTask steps
+Converts the Plan into a detailed **TaskPlan**:
 
-Defines:
+- Breaks project into ordered `ImplementationTask` steps  
+- Defines:
+  - Exact functions and classes  
+  - Variable names  
+  - Integration points  
+  - Imports and dependencies  
+- Ensures dependency-first execution order  
 
-Exact functions and classes
+---
 
-Variable names
-
-Integration points
-
-Imports and dependencies
-
-Ensures dependency-first execution order
-
-Coder Agent
+### 💻 Coder Agent
 
 Implements tasks iteratively:
 
-Reads existing file content
+- Reads existing file content  
+- Uses ReAct tool-based reasoning  
+- Writes full file implementations  
+- Maintains compatibility across modules  
+- Continues execution until all steps are complete  
 
-Uses ReAct tool-based reasoning
+#### 🛠 Tools Available to the Coder
 
-Writes full file implementations
+- `read_file`  
+- `write_file`  
+- `list_files`  
+- `get_current_directory`  
+- `run_cmd`  
 
-Maintains compatibility across modules
+---
 
-Continues execution until all steps are complete
+## 🧰 Tech Stack
 
-Tools available to the coder:
+- Python  
+- LangGraph  
+- LangChain  
+- Groq LLM (`openai/gpt-oss-120b`)  
+- Pydantic  
+- python-dotenv  
 
-read_file
+---
 
-write_file
+## 📁 Project Structure
 
-list_files
-
-get_current_directory
-
-run_cmd
-
-Tech Stack
-
-Python
-
-LangGraph
-
-LangChain
-
-Groq LLM (openai/gpt-oss-120b)
-
-Pydantic
-
-python-dotenv
-
-Project Structure
+```
 agent_pal/
 │
 ├── agent/
@@ -141,129 +132,136 @@ agent_pal/
 ├── .env
 ├── main.py
 └── requirements.txt
-
+```
 
 Generated files are written to:
 
+```
 generated_project/
-
+```
 
 All file operations are sandboxed inside this directory.
 
-Data Models
-Plan
+---
+
+## 📦 Data Models
+
+### 🗺 Plan
 
 Defines project blueprint including:
 
-Name
+- Name  
+- Description  
+- Tech stack  
+- Features  
+- Files  
 
-Description
+---
 
-Tech stack
-
-Features
-
-Files
-
-TaskPlan
+### 🧩 TaskPlan
 
 Ordered list of implementation steps.
 
-CoderState
+---
+
+### 🔄 CoderState
 
 Tracks:
 
-TaskPlan
-
-Current implementation step
-
-Current file content
+- TaskPlan  
+- Current implementation step  
+- Current file content  
 
 All models are implemented using Pydantic with strict schema enforcement.
 
-Safety & Controls
+---
 
-File writes restricted to generated_project/
+## 🛡 Safety & Controls
 
-Safe path resolution prevents directory traversal
+- File writes restricted to `generated_project/`  
+- Safe path resolution prevents directory traversal  
+- Structured outputs validated before execution  
+- Controlled recursion limit via CLI  
+- Explicit termination condition in execution graph  
 
-Structured outputs validated before execution
+---
 
-Controlled recursion limit via CLI
+## ⚙ Installation
 
-Explicit termination condition in execution graph
+### 1. Clone the Repository
 
-Installation
-1. Clone the Repository
+```bash
 git clone <repo-url>
+```
 
-2. Install Dependencies
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-3. Configure Environment
+### 3. Configure Environment
 
-Create a .env file:
+Create a `.env` file:
 
+```
 GROQ_API_KEY=your_api_key_here
+```
 
-Usage
+---
+
+## ▶ Usage
 
 Run via CLI:
 
+```bash
 python main.py
-
+```
 
 Optional recursion limit:
 
+```bash
 python main.py --recursion-limit 100
-
+```
 
 You will be prompted:
 
+```
 Enter your project prompt:
+```
 
+### Example Prompt
 
-Example:
-
-Build a colourful, intuitive, modern task scheduler app in html, css and js
-
+```
+Build a colourful, intuitive, modern task scheduler app in HTML, CSS and JS
+```
 
 The system will:
 
-Generate a structured plan
+1. Generate a structured plan  
+2. Decompose it into tasks  
+3. Iteratively implement files  
+4. Write results inside `generated_project/`  
+5. Output the final execution state  
 
-Decompose it into tasks
+---
 
-Iteratively implement files
+## 🧠 What This Project Demonstrates
 
-Write results inside generated_project/
+- Advanced LangGraph orchestration  
+- Structured multi-agent reasoning  
+- Schema-driven LLM output control  
+- ReAct-based tool invocation  
+- Safe autonomous file generation  
+- Iterative execution state tracking  
+- Practical agent system design patterns  
 
-Output the final execution state
+---
 
-What This Project Demonstrates
+## 📊 Execution Characteristics
 
-Advanced LangGraph orchestration
-
-Structured multi-agent reasoning
-
-Schema-driven LLM output control
-
-ReAct-based tool invocation
-
-Safe autonomous file generation
-
-Iterative execution state tracking
-
-Practical agent system design patterns
-
-Execution Characteristics
-
-Debug and verbose logging enabled
-
-Structured output validation at every stage
-
-Graph-based deterministic flow control
-
-Task-level state persistence
-
-CLI-based user interaction
+- Debug and verbose logging enabled  
+- Structured output validation at every stage  
+- Graph-based deterministic flow control  
+- Task-level state persistence  
+- CLI-based user interaction  
